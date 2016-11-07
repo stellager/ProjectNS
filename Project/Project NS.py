@@ -6,23 +6,24 @@
 import requests
 import xmltodict
 from tkinter import *
+
 root = Tk()
 root.configure(background='white')
 photo = PhotoImage(file="download.png")
 
-root.wm_title("NS Vertrektijden")
+root.wm_title("")
 root.iconbitmap('favicon.ico')
 root.resizable(width=False, height=False)
-root.geometry('{}x{}'.format(640, 360))
+root.geometry('{}x{}'.format(800, 450))
 
-logo=Label(image=photo).place(x=0, y=0)
+logo=Label(image=photo, borderwidth=0, highlightthickness=0).place(x=5, y=5)
 
-entry=Entry(master=root)
-entry.place(x=300, y=30, width=200, height=40)
 
-listbox = Listbox(master=root, background='#FFC917')
-listbox.place(x=20, y=100, width=600, height=240)
-listbox.config()
+entry=Entry(master=root, bd=0, font="calibri 13", fg='#0079D3')
+entry.place(x=470, y=10, width=235, height=40)
+entry.insert(0, 'Typ hier uw bestemming...')
+
+listbox = Listbox(master=root, bg='#FFC917', bd=1, font="calibri 14")
 
 
 
@@ -91,7 +92,8 @@ def treininfo(x,y):
         vertrekXML = xmltodict.parse(response.text)
 
 
-        listbox.insert(0,('De volgende treinen vertrekken komend uur vanaf '+y+':\n'))
+        listbox.insert(0,(' '))
+        listbox.insert(0,('\n    De volgende treinen vertrekken komend uur vanaf '+y+':'))
 
         for vertrek in vertrekXML['ActueleVertrekTijden']['VertrekkendeTrein']:
             eindbestemming = vertrek['EindBestemming']
@@ -109,13 +111,13 @@ def treininfo(x,y):
                 traject = eindbestemming
             try:
                 vertraging= vertrek['VertrekVertragingTekst']
-                vertraging2='De vertraging bedraagt: '+vertraging
+                vertraging2=' '+vertraging
             except KeyError:
                 vertraging2=''
 
-            listbox.insert(1,(vertrektijd + ' ' + treintype+' naar '+ eindbestemming+' vanaf spoor: '+'{:2}'.format(spoor2)+ vertraging2))
+            listbox.insert(1,("    " + vertrektijd + '' + vertraging2 + ' ' + treintype + ' naar '+ eindbestemming+' vanaf spoor: '+'{:2}'.format(spoor2)))
 
-        listbox.place(x=20, y=100, width=600, height=240)
+        listbox.place(x=0, y=70, width=800, height=430)
 
 def station_lijst():
     for station in stationsXML['Stations']['Station']:
@@ -151,7 +153,7 @@ def invoer():
     stationskeuze()
     if onbekend==2:
         listbox.insert(0,'Station onbekend, probeer het opnieuw.')
-        listbox.place(x=20, y=100, width=600, height=240)
+        listbox.place(x=0, y=70, width=800, height=430)
     else:
         treininfo(url2,keuze)
 
@@ -159,8 +161,10 @@ def callback(event):
     g=event
     invoer()
 
-button=Button(master=root, text='Zoek',command=invoer)
-button.place(x=500, y=30, width=100, height=40)
+button=Button(master=root, text='Zoek',command=invoer, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+button.place(x=695, y=10, width=90, height=40)
+
+entry.bind("<Return>",callback)
 
 ###########################
 station_lijst()
