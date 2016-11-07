@@ -19,6 +19,7 @@ def invoer():
     stationskeuze()
     if onbekend==2:
         listbox.insert(0,'Station onbekend, probeer het opnieuw.')
+        listbox.pack(fill=BOTH)
     else:
         response = requests.get(url2, auth=auth_details)
         with open('vertrektijden.xml', 'w',encoding="utf8") as myXMLFile:
@@ -138,7 +139,7 @@ def stationskeuze():
             global url2
             url2= beginurl+keuze4
             return url2
-        if keuze.upper() in stationslijst:
+        elif keuze.upper() in stationslijst:
             if keuze.upper() in codes:
                 keuze= stationslijst[stationslijst.index((keuze.upper()))+3]
             keuze2=keuze.replace(" " ,"+")
