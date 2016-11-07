@@ -1,6 +1,6 @@
 # ProjectNS
 
-Beschrijving
+# Beschrijving
 Om de Servicemedewerkers op de stations te ontlasten bestaat de wens om de reiziger op de NS
 Kaartverkoopautomaat de mogelijkheid te geven de actuele vertrekinformatie op te vragen.
 Dezelfde functie bestaat reeds op de NS website en in de Reisplanner app. Een grote groep reizigers
@@ -9,7 +9,7 @@ vertragingen en vertreksporen. Door dezelfde functie ook onder te brengen in de 
 is het de verwachting dat de druk op Servicemedewerkers afneemt.
 Deze functie is op zowel de NS website (Figuur 2) als de Reisplanner app (Figuur 3) beschikbaar:
 
-Opdracht
+# Opdracht
 Het is de wens van de NS om op het startscherm van de automaat een “ingang” te creëren naar de
 nieuwe functie waarmee de klant actuele reisinformatie kan opvragen. Hierbij moet in ieder geval
 de reisinformatie getoond kunnen worden van het station waarop de kaartverkoopautomaat zich
@@ -23,3 +23,5 @@ Bepaal zelf welke informatie die de API biedt nuttig is voor de reiziger en hoe 
 gepresenteerd kan worden op het scherm. Houd hierbij in gedachten dat alle typen reizigers
 hiermee overweg moeten kunnen. Leesbaarheid (lettergrootte, font, kleurstelling) is hierbij erg
 belangrijk.
+
+https://cursussen.sharepoint.hu.nl/fnt/53/TICT-V1PROG-15/Studiemateriaal/Miniproject/V1PROG-15_miniprojecten.pdf
