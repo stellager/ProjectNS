@@ -55,9 +55,11 @@ def keuze_1():
         elif x[i][1] == '-':
             x[i][1] = code
             lijst = x
-            msg=messagebox.showinfo("Nieuwe code", "U heeft kluisje {} en uw code is {}.\n".format(i+1, code))
+            msg=messagebox.showinfo("Nieuwe code", "U heeft kluisje {} en uw code is {}.".format(i+1, code))
             schrijven_csv(bestand, lijst)
             break
+        elif i == 11:
+            msg=messagebox.showinfo("Error", "Alle kluisjes zitten vol.")
 
 def keuze_2():
 
@@ -155,20 +157,20 @@ class GUI_3 (object):
 
 ###############################################
 #
-# GUI
+# GUI menu
 #
 ###############################################
 
 root = Tk()
-#root.configure(background='white')
-#photo = PhotoImage(file="download.png")
+root.configure(background='white')
+photo = PhotoImage(file="download.png")
 
-#root.wm_title("Kluisjes")
-#root.iconbitmap('favicon.ico')
-#root.resizable(width=True, height=True)
+root.wm_title("Kluisjes")
+root.iconbitmap('favicon.ico')
+root.resizable(width=True, height=True)
 root.geometry('{}x{}'.format(650, 500))
 
-#logo=Label(image=photo).place (x=0, y=0)
+logo=Label(image=photo).place (x=0, y=0)
 
 nemen = Button (root, text ="Kluisje nemen", command = keuze_1)
 nemen.place(x=50,y=50)
