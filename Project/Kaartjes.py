@@ -5,10 +5,6 @@
 #       ENTER GEEFT RITPRIJS
 #
 ##############################
-
-
-
-
 from math import radians, cos, sin, asin, sqrt
 import requests
 import xmltodict
@@ -152,16 +148,11 @@ def standaardprijs(afstandKM):
 
 def ritprijs():
     if weekdag == 0:
-        if leeftijd== '65+' or leeftijd =='12 jaar of jonger': return "De prijs van de rit is: " + str(prijs*0.65)+" euro."
-        else: return "De prijs van de rit is: " + str(prijs)+" euro."
+        if leeftijd== '65+' or leeftijd =='12 jaar of jonger': return prijs*0.65
+        else: return prijs
     if weekdag == 1:
-        if leeftijd=='Volwassen': return "De prijs van de rit is: " +str(prijs*0.6)+" euro."
-        else: return "De prijs van de rit is: " + str(prijs)+" euro."
-
-
-
-
-
+        if leeftijd=='Volwassen': return prijs*0.6
+        else: return prijs
 
 
 keuze2=''
@@ -233,8 +224,7 @@ def longus():
         lat1=float(stat_1[0])
         lon2=float(stat_2[1])
         lat2=float(stat_2[0])
-        global km
-        km=haversine(lon1, lat1, lon2, lat2)
+        haversine(lon1, lat1, lon2, lat2)
         main()
 def opnieuw():
     global keuze
@@ -249,8 +239,8 @@ def opnieuw():
     stat_2=[]
 def main():
     ComboBoxDemo().mainloop()
-    standaardprijs(km)
-    a=str(ritprijs())
+    standaardprijs(km2)
+    a=round(ritprijs(),2)
     listbox.insert(0,(a))
     opnieuw()
 
@@ -275,14 +265,11 @@ def haversine(lon1, lat1, lon2, lat2):
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
     c = 2 * asin(sqrt(a))
     km = 6367 * c
-    return km
-
-
-
-
+    global km2
+    km2= round(km,2)
 
 
 station_lijst_2()
 root.mainloop()
-
+print(km2)
 
