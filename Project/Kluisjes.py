@@ -61,22 +61,27 @@ def keuze_1():
 
 def keuze_2():
 
-    global entrycode
+    global value
     global bestand
     x = lezen_csv(bestand)
-
-    code = input("Voer kluis nummer en code in.")
+    count = 0
+    code = value
 
     for i in range(len(x)):
-        if code == x[i][1]:
+        if code in x[i][1]:
             msg=messagebox.showinfo("Info","Kluisje {} gaat open.\n".format(x[i][0]))
+        elif code not in x[i][1] :
+            count += 1
+            if count >= len(x):
+                msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
 
 def keuze_3():
 
+    global value
     global bestand
     x = lezen_csv(bestand)
-
-    code = input("Voer kluis nummer en code in.")
+    count = 0
+    code = value
 
     for i in range(len(x)):
         if code in x[i][1]:
@@ -86,7 +91,9 @@ def keuze_3():
             schrijven_csv(bestand, lijst)
             break
         elif code not in x[i][1] :
-            msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
+            count += 1
+            if count >= len(x):
+                msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
 
 def keuze_4():
 
@@ -102,6 +109,49 @@ def keuze_4():
 def keuze_5():
 
     msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
+    root.destroy()
+
+class GUI_2 (object):
+
+    def __init__(self):
+
+        top=self.top=Toplevel(root)
+        self.entryl2=Label(top,text="Voer uw code in :")
+        self.entryl2.pack()
+
+        self.entry2=Entry(top)
+        self.entry2.pack()
+
+        self.entryb2=Button(top, text='Geef code uw code', command=self.cleanup)
+        self.entryb2.pack()
+
+    def cleanup(self):
+
+        global value
+        value=self.entry2.get()
+        self.top.destroy()
+        keuze_2()
+
+class GUI_3 (object):
+
+    def __init__(self):
+
+        top=self.top=Toplevel(root)
+        self.entryl3=Label(top,text="Voer uw code in :")
+        self.entryl3.pack()
+
+        self.entry3=Entry(top)
+        self.entry3.pack()
+
+        self.entryb3=Button(top, text='Geef uw code', command=self.cleanup)
+        self.entryb3.pack()
+
+    def cleanup(self):
+
+        global value
+        value=self.entry3.get()
+        self.top.destroy()
+        keuze_3()
 
 ###############################################
 #
@@ -123,19 +173,16 @@ root.geometry('{}x{}'.format(650, 500))
 nemen = Button (root, text ="Kluisje nemen", command = keuze_1)
 nemen.place(x=50,y=50)
 
-openen = Button (root, text ="Kluisje openen", command = keuze_2)
-openen.place(x=150,y=50)
+openen = Button (root, text ="Kluisje openen", command = GUI_2)
+openen.place(x=175,y=50)
 
-teruggeven = Button (root, text ="Kluisje teruggeven", command = keuze_3)
-teruggeven.place(x=250,y=50)
+teruggeven = Button (root, text ="Kluisje teruggeven", command = GUI_3)
+teruggeven.place(x=300,y=50)
 
 bekijken = Button (root, text ="Kluisje bekijken", command = keuze_4)
-bekijken.place(x=350,y=50)
+bekijken.place(x=425,y=50)
 
 afsluiten = Button (root, text ="Afsluiten", command = keuze_5)
-afsluiten.place(x=450,y=50)
-
-entrybutton = Button(root, text="get", command=callback)
-entrybutton.pack()
+afsluiten.place(x=550,y=50)
 
 root.mainloop()
