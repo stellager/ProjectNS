@@ -255,9 +255,10 @@ def main():
     standaardprijs(km2)
     a=round(ritprijs(),2)
     b='U valt in de leeftijdscategorie '+leeftijd+'.'
-    c='Op een '+weekdagen[datetime.datetime.today().weekday()]+' bedraagt de prijs van uw rit van '+stat1+' naar '+stat2+': '+str(a)+' euro.'
+    c='Op een '+weekdagen[datetime.datetime.today().weekday()]+' bedraagt de prijs van uw rit van '+stat1+' naar '+stat2+': €'+"{0:.2f}".format(a)+' euro.'
     listbox.insert(0,(b))
     listbox.insert(1,(c))
+    listbox.insert(5,'Disclaimer: Deze prijs is enkel een benadering.')
     opnieuw()
 
 def keuze_5():
@@ -322,3 +323,4 @@ def haversine(lon1, lat1, lon2, lat2):
 
 
 station_lijst_2()
+
