@@ -92,8 +92,8 @@ def treininfo(x,y):
         vertrekXML = xmltodict.parse(response.text)
 
 
-        listbox.insert(0,(' '))
-        listbox.insert(0,('\n    De volgende treinen vertrekken komend uur vanaf '+y+':'))
+
+        listbox.insert(0,('    De volgende treinen vertrekken komend uur vanaf '+y+':'))
 
         for vertrek in vertrekXML['ActueleVertrekTijden']['VertrekkendeTrein']:
             eindbestemming = vertrek['EindBestemming']
@@ -115,7 +115,7 @@ def treininfo(x,y):
             except KeyError:
                 vertraging2=''
 
-            listbox.insert(1,("    " + vertrektijd + '' + vertraging2 + ' ' + treintype + ' naar '+ eindbestemming+' vanaf spoor: '+'{:2}'.format(spoor2)))
+            listbox.insert(END,("    " + vertrektijd + '' + vertraging2 + ' ' + treintype + ' naar '+ eindbestemming+' vanaf spoor: '+'{:2}'.format(spoor2)))
 
         listbox.place(x=0, y=70, width=800, height=430)
 
@@ -168,7 +168,7 @@ entry.bind("<Return>",callback)
 
 ###########################
 station_lijst()
-treininfo('http://webservices.ns.nl/ns-api-avt?station=Haarlem','Haarlem')
+treininfo('http://webservices.ns.nl/ns-api-avt?station=Utrecht','Utrecht')
 root.mainloop()
 
 print(url2)
