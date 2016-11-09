@@ -174,6 +174,3 @@ def GUI():
 
     entry.bind("<Return>",callback)
 
-
-
-
