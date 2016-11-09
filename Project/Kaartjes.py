@@ -166,43 +166,43 @@ def stationskeuze(x):
         global onbekend
         onbekend=0
         global keuze
-        global keuze2
+        global keuze3
 
         if x in stationslijst:
             keuze=x
             if keuze in codes:
-                keuze2= stationslijst[stationslijst.index(keuze)+3]
+                keuze3= stationslijst[stationslijst.index(keuze)+3]
                 return longlat[(codes.index(keuze))]
             elif keuze in kort:
-                keuze2= stationslijst[stationslijst.index(keuze)+2]
+                keuze3= stationslijst[stationslijst.index(keuze)+2]
                 return longlat[(kort.index(keuze))]
             elif keuze in middel:
-                keuze2= stationslijst[stationslijst.index(keuze)+1]
+                keuze3= stationslijst[stationslijst.index(keuze)+1]
                 return longlat[(middel.index(keuze))]
             elif keuze in lang:
                 return longlat[(lang.index(keuze))]
         elif x.title() in stationslijst:
             keuze=x.title()
             if keuze in codes:
-                keuze2= stationslijst[stationslijst.index(keuze)+3]
+                keuze3= stationslijst[stationslijst.index(keuze)+3]
                 return longlat[(codes.index(keuze))]
             elif keuze in kort:
-                keuze2= stationslijst[stationslijst.index(keuze)+2]
+                keuze3= stationslijst[stationslijst.index(keuze)+2]
                 return longlat[(kort.index(keuze))]
             elif keuze in middel:
-                keuze2= stationslijst[stationslijst.index(keuze)+1]
+                keuze3= stationslijst[stationslijst.index(keuze)+1]
                 return longlat[middel.index(keuze)]
             elif keuze in lang:
                 return longlat[lang.index(keuze)]
 
-        elif keuze.upper() in stationslijst:
+        elif x.upper() in stationslijst:
             keuze=x.upper()
             if keuze in codes:
-                keuze2= stationslijst[(stationslijst.index(keuze)+3)]
+                keuze3= stationslijst[(stationslijst.index(keuze)+3)]
                 return longlat[(codes.index(keuze))]
-            else:
-                onbekend=2
-                break
+        else:
+            onbekend=2
+            break
 def longus():
     listbox.delete(0,END)
     if onbekend==2:
@@ -246,8 +246,9 @@ def main():
 
 
 
-button=Button(master=root, text='Zoek',command=longus)
-button.place(x=500, y=30, width=100, height=40)
+
+button=Button(master=root, text='Zoek',command=longus, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+button.place(x=500, y=30, width=90, height=40)
 
 
 
@@ -271,5 +272,6 @@ def haversine(lon1, lat1, lon2, lat2):
 
 station_lijst_2()
 root.mainloop()
-print(km2)
+print(onbekend)
 
+print('Utrecht' in stationslijst)
