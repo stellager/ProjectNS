@@ -1,7 +1,7 @@
 # Niels van Brakel - 1710314
 
 import csv
-
+import Kluisjes
 from tkinter import *
 
 ###############################################
@@ -15,7 +15,7 @@ def keuze_1():
     print("nog maken")
 
 def keuze_2():
-    import Kluisjes.py
+    Kluisjes.GUI_kluisjes()
     GUI_menu()   
 def keuze_3():
     from Project_NS2 import station_lijst
