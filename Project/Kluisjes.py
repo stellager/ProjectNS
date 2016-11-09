@@ -10,9 +10,34 @@ bestand = "kluisjes.csv"
 # Script
 #
 ###############################################
+def gui():
+    kluis = Tk()
+    kluis.configure(background='white')
+    photo = PhotoImage(file="download.png")
+
+    kluis.wm_title("Kluisjes")
+    kluis.iconbitmap('favicon.ico')
+    kluis.resizable(width=True, height=True)
+    kluis.geometry('{}x{}'.format(775, 375))
+
+    nemen = Button (kluis, text ="Kluisje nemen", command = keuze_1, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+    nemen.place(x=25,y=150,width=125, height=75)
+
+    openen = Button (kluis, text ="Kluisje openen", command = GUI_2, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+    openen.place(x=175,y=150,width=125, height=75)
+
+    teruggeven = Button (kluis, text ="Kluisje teruggeven", command = GUI_3, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+    teruggeven.place(x=325,y=150,width=125, height=75)
+
+    bekijken = Button (kluis, text ="Kluisje bekijken", command = keuze_4, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+    bekijken.place(x=475,y=150,width=125, height=75)
+
+    afsluiten = Button (kluis, text ="Afsluiten", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+    afsluiten.place(x=625,y=150,width=125, height=75)
+
+    kluis.mainloop()
 
 def willekeurig():
-
 
     nummer_1 = str(random.randrange(1,10))
     nummer_2 = str(random.randrange(1,10))
@@ -111,48 +136,48 @@ def keuze_4():
 def keuze_5():
 
     msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
-    root.destroy()
+    kluis.destroy()
 
 class GUI_2 (object):
 
     def __init__(self):
 
-        top=self.top=Toplevel(root)
-        self.entryl2=Label(top,text="Voer uw code in :")
+        vraag=self.vraag=Toplevel(kluis)
+        self.entryl2=Label(vraag,text="Voer uw code in :")
         self.entryl2.pack()
 
-        self.entry2=Entry(top, show="*")
+        self.entry2=Entry(vraag, show="*")
         self.entry2.pack()
 
-        self.entryb2=Button(top, text='Geef code uw code', command=self.cleanup)
+        self.entryb2=Button(vraag, text='Geef code uw code', command=self.cleanup)
         self.entryb2.pack()
 
     def cleanup(self):
 
         global value
         value=self.entry2.get()
-        self.top.destroy()
+        self.vraag.destroy()
         keuze_2()
 
 class GUI_3 (object):
 
     def __init__(self):
 
-        top=self.top=Toplevel(root)
-        self.entryl3=Label(top,text="Voer uw code in :")
+        vraag=self.vraag=Toplevel(kluis)
+        self.entryl3=Label(vraag,text="Voer uw code in :")
         self.entryl3.pack()
 
-        self.entry3=Entry(top, show="*")
+        self.entry3=Entry(vraag, show="*")
         self.entry3.pack()
 
-        self.entryb3=Button(top, text='Geef uw code', command=self.cleanup)
+        self.entryb3=Button(vraag, text='Geef uw code', command=self.cleanup)
         self.entryb3.pack()
 
     def cleanup(self):
 
         global value
         value=self.entry3.get()
-        self.top.destroy()
+        self.vraag.destroy()
         keuze_3()
 
 ###############################################
@@ -161,30 +186,29 @@ class GUI_3 (object):
 #
 ###############################################
 
-root = Tk()
-root.configure(background='white')
+kluis = Tk()
+kluis.configure(background='white')
 photo = PhotoImage(file="download.png")
 
-root.wm_title("Kluisjes")
-root.iconbitmap('favicon.ico')
-root.resizable(width=True, height=True)
-root.geometry('{}x{}'.format(650, 500))
+kluis.wm_title("Kluisjes")
+kluis.iconbitmap('favicon.ico')
+kluis.resizable(width=True, height=True)
+kluis.geometry('{}x{}'.format(775, 375))
 
-logo=Label(image=photo).place (x=0, y=0)
+nemen = Button (kluis, text ="Kluisje nemen", command = keuze_1, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+nemen.place(x=25,y=150,width=125, height=75)
 
-nemen = Button (root, text ="Kluisje nemen", command = keuze_1)
-nemen.place(x=50,y=50)
+openen = Button (kluis, text ="Kluisje openen", command = GUI_2, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+openen.place(x=175,y=150,width=125, height=75)
 
-openen = Button (root, text ="Kluisje openen", command = GUI_2)
-openen.place(x=175,y=50)
+teruggeven = Button (kluis, text ="Kluisje teruggeven", command = GUI_3, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+teruggeven.place(x=325,y=150,width=125, height=75)
 
-teruggeven = Button (root, text ="Kluisje teruggeven", command = GUI_3)
-teruggeven.place(x=300,y=50)
+bekijken = Button (kluis, text ="Kluisje bekijken", command = keuze_4, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+bekijken.place(x=475,y=150,width=125, height=75)
 
-bekijken = Button (root, text ="Kluisje bekijken", command = keuze_4)
-bekijken.place(x=425,y=50)
+afsluiten = Button (kluis, text ="Afsluiten", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
+afsluiten.place(x=625,y=150,width=125, height=75)
 
-afsluiten = Button (root, text ="Afsluiten", command = keuze_5)
-afsluiten.place(x=550,y=50)
+kluis.mainloop()
 
-root.mainloop()
