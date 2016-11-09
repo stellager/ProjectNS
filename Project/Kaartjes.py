@@ -1,9 +1,4 @@
-#       WRITER - Tim Hoogeland  
-#       WERKING
-#       VUL STATION 1 IN
-#       VUL STATION 2 IN
-#       KIES LEEFTIJDSGROEP
-#       ENTER GEEFT RITPRIJS
+#       Writer - Tim Hoogeland
 #
 ##############################
 from math import radians, cos, sin, asin, sqrt
@@ -271,7 +266,7 @@ def keuze_5():
 
 def callback(event):
     g=event
-    longus
+    longus()
 
 def GUI_Kaartjes():
     global root
@@ -306,7 +301,7 @@ def GUI_Kaartjes():
     afsluiten = Button (master=root, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
     afsluiten.place(x=680,y=10, width=100, height=40)
 
-    button.bind("<Return>",callback)
+    entry.bind("<Return>",callback)
 
 
 def haversine(lon1, lat1, lon2, lat2):
