@@ -2,6 +2,8 @@
 
 import csv
 import Kluisjes
+import Kaartjes
+import Project_NS
 from tkinter import *
 
 ###############################################
@@ -12,19 +14,17 @@ from tkinter import *
 
 
 def keuze_1():
-    print("nog maken")
+    Kaartjes.GUI_Kaartjes()
+    GUI_menu()
+
 
 def keuze_2():
     Kluisjes.GUI_kluisjes()
     GUI_menu()
 def keuze_3():
-    from Project_NS import station_lijst
-    from Project_NS import GUI
-    from Project_NS import treininfo
-    station_lijst()
-    GUI()
-
-    treininfo('http://webservices.ns.nl/ns-api-avt?station=Utrecht','Utrecht')
+    Project_NS.station_lijst()
+    Project_NS.GUI()
+    Project_NS.treininfo('http://webservices.ns.nl/ns-api-avt?station=Utrecht','Utrecht')
     GUI_menu()
 
 
