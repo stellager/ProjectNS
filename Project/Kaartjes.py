@@ -1,3 +1,4 @@
+#       WRITER - Tim Hoogeland  
 #       WERKING
 #       VUL STATION 1 IN
 #       VUL STATION 2 IN
@@ -23,7 +24,7 @@ def dagvdweek():
         weekdag=0
 class ComboBoxDemo(ttk.Frame):
 
-    def __init__(self, isapp=True, name='comboboxdemo'):
+    def __init__(self, isapp=True, name='combobox'):
         ttk.Frame.__init__(self, name=name)
         self.pack(expand=Y)
         self.master.title('')
@@ -128,8 +129,11 @@ def station_lijst_2():
 
 def standaardprijs(afstandKM):
     global prijs
-    if afstandKM>50: prijs=15+0.6*afstandKM
-    elif afstandKM>0: prijs= 0.8*afstandKM
+    if afstandKM>50:
+        prijs=0.15*afstandKM+1
+        if prijs>26.30:
+            prijs=26.30
+    elif afstandKM>0: prijs= 0.21*afstandKM+1
     else: prijs=0
 
 def ritprijs():
@@ -137,7 +141,7 @@ def ritprijs():
         if leeftijd== '65+' or leeftijd =='12 jaar of jonger': return prijs*0.65
         else: return prijs
     if weekdag == 1:
-        if leeftijd=='Volwassen': return prijs*0.6
+        if leeftijd=='Volwassen': return prijs*0.65
         else: return prijs
 
 
@@ -148,11 +152,14 @@ stat_1=[]
 stat_2=[]
 
 def stationskeuze(x):
+    global s
+
     while True:
         global onbekend
         onbekend=0
         global keuze
         global keuze3
+
         utrecht=['Utrecht', 'utrecht', 'Utrecht c.','utrecht c.', 'utrecht C.', 'Utrecht C.']
         if x in utrecht:
             return [52.0888900756836,5.11027765274048]
@@ -160,60 +167,83 @@ def stationskeuze(x):
             keuze=x
             if keuze in codes:
                 keuze3= stationslijst[stationslijst.index(keuze)+3]
+                s=keuze3
                 return longlat[(codes.index(keuze))]
             elif keuze in kort:
                 keuze3= stationslijst[stationslijst.index(keuze)+2]
+                s=keuze3
                 return longlat[(kort.index(keuze))]
             elif keuze in middel:
                 keuze3= stationslijst[stationslijst.index(keuze)+1]
+                s=keuze3
                 return longlat[(middel.index(keuze))]
             elif keuze in lang:
+                keuze=keuze3
+                s=keuze3
                 return longlat[(lang.index(keuze))]
         elif x.title() in stationslijst:
             keuze=x.title()
             if keuze in codes:
                 keuze3= stationslijst[stationslijst.index(keuze)+3]
+                s=keuze3
                 return longlat[(codes.index(keuze))]
             elif keuze in kort:
                 keuze3= stationslijst[stationslijst.index(keuze)+2]
+                s=keuze3
                 return longlat[(kort.index(keuze))]
             elif keuze in middel:
                 keuze3= stationslijst[stationslijst.index(keuze)+1]
+                s=keuze3
                 return longlat[middel.index(keuze)]
             elif keuze in lang:
+                keuze=keuze3
+                s=keuze3
                 return longlat[lang.index(keuze)]
 
         elif x.upper() in stationslijst:
             keuze=x.upper()
             if keuze in codes:
                 keuze3= stationslijst[(stationslijst.index(keuze)+3)]
+                s=keuze3
                 return longlat[(codes.index(keuze))]
         else:
             onbekend=2
             break
 def longus():
     listbox.delete(0,END)
-    if onbekend==2:
-        listbox.insert(0,'Station onbekend, probeer het opnieuw.')
-        listbox.place(x=0, y=70, width=800, height=430)
-    elif keuze=='':
+
+    if keuze=='':
         global keuze
         keuze=entry.get()
         global stat_1
         stat_1=stationskeuze(keuze)
-        listbox.insert(0,'Kies volgende station')
-        listbox.place(x=0, y=70, width=800, height=430)
+        if onbekend==2:
+            listbox.insert(0,'Station onbekend, probeer het opnieuw.')
+            listbox.place(x=0, y=70, width=800, height=430)
+            opnieuw()
+        else:
+            global stat1
+            stat1=s
+            listbox.insert(0,'Kies volgende station')
+            listbox.place(x=0, y=70, width=800, height=430)
     elif keuze_2=='':
         global keuze_2
         keuze_2=entry.get()
         global stat_2
         stat_2=stationskeuze(keuze_2)
-        lon1=float(stat_1[1])
-        lat1=float(stat_1[0])
-        lon2=float(stat_2[1])
-        lat2=float(stat_2[0])
-        haversine(lon1, lat1, lon2, lat2)
-        main()
+        if onbekend==2:
+            listbox.insert(0,'Station onbekend, probeer het opnieuw.')
+            listbox.place(x=0, y=70, width=800, height=430)
+            opnieuw()
+        else:
+            global stat2
+            stat2=s
+            lon1=float(stat_1[1])
+            lat1=float(stat_1[0])
+            lon2=float(stat_2[1])
+            lat2=float(stat_2[0])
+            haversine(lon1, lat1, lon2, lat2)
+            main()
 def opnieuw():
     global keuze
     global keuze_2
@@ -229,7 +259,10 @@ def main():
     ComboBoxDemo().mainloop()
     standaardprijs(km2)
     a=round(ritprijs(),2)
-    listbox.insert(0,(a))
+    b='U valt in de leeftijdscategorie '+leeftijd+'.'
+    c='Op een '+weekdagen[datetime.datetime.today().weekday()]+' bedraagt de prijs van uw rit van '+stat1+' naar '+stat2+': '+str(a)+' euro.'
+    listbox.insert(0,(b))
+    listbox.insert(1,(c))
     opnieuw()
 
 def keuze_5():
@@ -239,33 +272,41 @@ def keuze_5():
 def callback(event):
     g=event
     longus
-root = Tk()
-root.configure(background='white')
-photo = PhotoImage(file="download.png")
 
-root.wm_title("")
-root.iconbitmap('favicon.ico')
-root.resizable(width=False, height=False)
-root.geometry('{}x{}'.format(800, 450))
+def GUI_Kaartjes():
+    global root
+    global entry
+    global photo
+    global listbox
+    global button
+    global afsluiten
+    root = Tk()
+    root.configure(background='white')
+    photo = PhotoImage(file="download.png")
 
-title3=Label(master=root, text="Kaartjes", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 20 bold")
-title3.place(x=20, y=10)
+    root.wm_title("")
+    root.iconbitmap('favicon.ico')
+    root.resizable(width=False, height=False)
+    root.geometry('{}x{}'.format(800, 450))
 
-entry=Entry(master=root, bd=0, font="calibri 13", fg='#0079D3')
-entry.place(x=345, y=10, width=235, height=40)
-entry.insert(0, 'Typ hier uw begin station...')
+    title3=Label(master=root, text="Kaartjes", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 20 bold")
+    title3.place(x=20, y=10)
 
-listbox = Listbox(master=root, bg='#FFC917', bd=1, font="calibri 14")
-listbox.place(x=0, y=70, width=800, height=430)
-listbox.config()
+    entry=Entry(master=root, bd=0, font="calibri 13", fg='#0079D3')
+    entry.place(x=345, y=10, width=235, height=40)
+    entry.insert(0, 'Typ hier uw begin station...')
 
-button=Button(master=root, text='Zoek',command=longus, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
-button.place(x=570, y=10, width=100, height=40)
+    listbox = Listbox(master=root, bg='#FFC917', bd=1, font="calibri 14")
+    listbox.place(x=0, y=70, width=800, height=430)
+    listbox.config()
 
-afsluiten = Button (master=root, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
-afsluiten.place(x=680,y=10, width=100, height=40)
+    button=Button(master=root, text='Zoek',command=longus, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+    button.place(x=570, y=10, width=100, height=40)
 
-button.bind("<Return>",callback)
+    afsluiten = Button (master=root, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+    afsluiten.place(x=680,y=10, width=100, height=40)
+
+    button.bind("<Return>",callback)
 
 
 def haversine(lon1, lat1, lon2, lat2):
@@ -285,7 +326,8 @@ def haversine(lon1, lat1, lon2, lat2):
     km2= round(km,2)
 
 
-station_lijst_2()
-root.mainloop()
-print(onbekend)
 
+
+station_lijst_2()
+GUI_Kaartjes()
+root.mainloop()
