@@ -108,7 +108,7 @@ def keuze_4():
 
 def keuze_5():
 
-    msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
+    #msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
     kluis.destroy()
 
 class GUI_2 (object):
@@ -171,24 +171,27 @@ def GUI_kluisjes():
     kluis.configure(background='white')
     photo = PhotoImage(file="download.png")
 
-    kluis.wm_title("Kluisjes")
+    kluis.wm_title("")
     kluis.iconbitmap('favicon.ico')
-    kluis.resizable(width=True, height=True)
-    kluis.geometry('{}x{}'.format(775, 375))
+    kluis.resizable(width=False, height=False)
+    kluis.geometry('{}x{}'.format(800, 450))
 
-    nemen = Button (kluis, text ="Kluisje nemen", command = keuze_1, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
-    nemen.place(x=25,y=150,width=125, height=75)
+    title2=Label(kluis, text="Kluisjes", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 20 bold")
+    title2.place(x=330, y=0)
 
-    openen = Button (kluis, text ="Kluisje openen", command = GUI_2, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
-    openen.place(x=175,y=150,width=125, height=75)
+    nemen = Button (kluis, text ="Kluisje nemen", command = keuze_1, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
+    nemen.place(x=160,y=70, width=200, height=150)
 
-    teruggeven = Button (kluis, text ="Kluisje teruggeven", command = GUI_3, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
-    teruggeven.place(x=325,y=150,width=125, height=75)
+    openen = Button (kluis, text ="Kluisje openen", command = GUI_2, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
+    openen.place(x=388,y=70, width=200, height=150)
 
-    bekijken = Button (kluis, text ="Kluisje bekijken", command = keuze_4, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
-    bekijken.place(x=475,y=150,width=125, height=75)
+    teruggeven = Button (kluis, text ="Kluisje teruggeven", command = GUI_3, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
+    teruggeven.place(x=160,y=250, width=200, height=150)
 
-    afsluiten = Button (kluis, text ="Afsluiten", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 11 bold")
-    afsluiten.place(x=625,y=150,width=125, height=75)
+    bekijken = Button (kluis, text ="Kluisje bekijken", command = keuze_4, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
+    bekijken.place(x=388,y=250, width=200, height=150)
+
+    afsluiten = Button (kluis, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+    afsluiten.place(x=680,y=10, width=100, height=40)
 
     kluis.mainloop()

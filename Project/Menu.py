@@ -16,11 +16,11 @@ def keuze_1():
 
 def keuze_2():
     Kluisjes.GUI_kluisjes()
-    GUI_menu()   
+    GUI_menu()
 def keuze_3():
-    from Project_NS2 import station_lijst
-    from Project_NS2 import GUI
-    from Project_NS2 import treininfo
+    from Project_NS import station_lijst
+    from Project_NS import GUI
+    from Project_NS import treininfo
     station_lijst()
     GUI()
 

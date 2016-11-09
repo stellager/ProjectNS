@@ -26,11 +26,11 @@ class ComboBoxDemo(ttk.Frame):
     def __init__(self, isapp=True, name='comboboxdemo'):
         ttk.Frame.__init__(self, name=name)
         self.pack(expand=Y)
-        self.master.title('Combobox Demo')
+        self.master.title('')
         self.isapp = isapp
         global dag
-        dag=ttk.Label(text='Dag van de week:'+weekdagen[datetime.datetime.today().weekday()])
-        dag.pack(pady=5, padx=10)
+        dag=Label(text='Dag van de week: '+weekdagen[datetime.datetime.today().weekday()], bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        dag.place(x=300, y=260, width=200, height=40)
         self._butone()
         self._create_demo_panel()
 
@@ -41,24 +41,27 @@ class ComboBoxDemo(ttk.Frame):
         demoPanel = Frame(self)
         demoPanel.pack(side=BOTTOM, fill=BOTH, expand=Y)
 
+        global dag2
+        dag2=Label(text='Leeftijd categorie', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        dag2.place(x=300, y=160, width=200, height=40)
 
         global cb3
         opties = ('65+', '12 jaar of jonger', 'Volwassen')
-        cbp3 = ttk.Labelframe(demoPanel, text='Leeftijd')
-        cb3 = ttk.Combobox(cbp3, values=opties, state='readonly')
+        cb3 = ttk.Combobox(root, values=opties, state='readonly')
         cb3.current(0)  # set selection
-        cb3.pack(side=BOTTOM,pady=5, padx=10)
+        cb3.place(x=300, y=200, width=200, height=40)
 
 
-        cbp3.pack(in_=demoPanel, side=BOTTOM, pady=5, padx=10)
     def _butone(self):
         global button1
-        button1=Button(text='Volgende',command=self.leeftijdwaarde)
-        button1.pack(side=BOTTOM,pady=5, padx=10)
+        button1=Button(text='Volgende',command=self.leeftijdwaarde, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+        button1.place(x=350, y=300, width=100, height=40)
     def leeftijdwaarde(self):
         global leeftijd
         leeftijd=cb3.get()
         dag.destroy()
+        dag2.destroy()
+        cb3.destroy()
         dag.quit()
         button1.destroy()
         button1.quit()
@@ -192,14 +195,14 @@ def longus():
     listbox.delete(0,END)
     if onbekend==2:
         listbox.insert(0,'Station onbekend, probeer het opnieuw.')
-        listbox.place(x=20, y=100, width=600, height=240)
+        listbox.place(x=0, y=70, width=800, height=430)
     elif keuze=='':
         global keuze
         keuze=entry.get()
         global stat_1
         stat_1=stationskeuze(keuze)
         listbox.insert(0,'Kies volgende station')
-        listbox.place(x=20, y=100, width=600, height=240)
+        listbox.place(x=0, y=70, width=800, height=430)
     elif keuze_2=='':
         global keuze_2
         keuze_2=entry.get()
@@ -229,6 +232,9 @@ def main():
     listbox.insert(0,(a))
     opnieuw()
 
+def keuze_5():
+    #msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
+    root.destroy()
 
 def callback(event):
     g=event
@@ -237,22 +243,27 @@ root = Tk()
 root.configure(background='white')
 photo = PhotoImage(file="download.png")
 
-root.wm_title("Kaartverkoop")
+root.wm_title("")
 root.iconbitmap('favicon.ico')
 root.resizable(width=False, height=False)
-root.geometry('{}x{}'.format(640, 360))
+root.geometry('{}x{}'.format(800, 450))
 
-logo=Label(image=photo).place(x=0, y=0)
+title3=Label(master=root, text="Kaartjes", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 20 bold")
+title3.place(x=20, y=10)
 
-entry=Entry(master=root)
-entry.place(x=300, y=30, width=200, height=40)
+entry=Entry(master=root, bd=0, font="calibri 13", fg='#0079D3')
+entry.place(x=345, y=10, width=235, height=40)
+entry.insert(0, 'Typ hier uw begin station...')
 
-listbox = Listbox(master=root, background='#FFC917')
-listbox.place(x=20, y=100, width=600, height=240)
+listbox = Listbox(master=root, bg='#FFC917', bd=1, font="calibri 14")
+listbox.place(x=0, y=70, width=800, height=430)
 listbox.config()
 
-button=Button(master=root, text='Zoek',command=longus, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
-button.place(x=500, y=30, width=90, height=40)
+button=Button(master=root, text='Zoek',command=longus, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+button.place(x=570, y=10, width=100, height=40)
+
+afsluiten = Button (master=root, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+afsluiten.place(x=680,y=10, width=100, height=40)
 
 button.bind("<Return>",callback)
 
@@ -277,5 +288,4 @@ def haversine(lon1, lat1, lon2, lat2):
 station_lijst_2()
 root.mainloop()
 print(onbekend)
-
 

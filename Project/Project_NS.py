@@ -8,9 +8,6 @@ import xmltodict
 from tkinter import *
 
 
-
-
-
 auth_details = ('t.hoogeland@live.com','3leOcnJcxNX8Hw3gJ7v5zn3EP2T_R_gEwcotJ-aQ0zzNz4ayWNO-tA')
 stations_url = 'http://webservices.ns.nl/ns-api-stations-v2'
 stations_response = requests.get(stations_url, auth=auth_details)
@@ -145,6 +142,10 @@ def callback(event):
     g=event
     invoer()
 
+def keuze_5():
+    #msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
+    root.destroy()
+
 def GUI():
     global root
     global entry
@@ -154,23 +155,24 @@ def GUI():
 
     root = Tk()
     root.configure(background='white')
-    photo = PhotoImage(file="download.png")
 
     root.wm_title("")
     root.iconbitmap('favicon.ico')
     root.resizable(width=False, height=False)
     root.geometry('{}x{}'.format(800, 450))
 
-    logo=Label(image=photo, borderwidth=0, highlightthickness=0).place(x=5, y=5)
-
+    title3=Label(root, text="Vertrektijden", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 20 bold")
+    title3.place(x=20, y=10)
 
     entry=Entry(master=root, bd=0, font="calibri 13", fg='#0079D3')
-    entry.place(x=470, y=10, width=235, height=40)
+    entry.place(x=345, y=10, width=235, height=40)
     entry.insert(0, 'Typ hier uw bestemming...')
 
     listbox = Listbox(master=root, bg='#FFC917', bd=1, font="calibri 14")
-    button=Button(master=root, text='Zoek',command=invoer, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
-    button.place(x=695, y=10, width=90, height=40)
+    button=Button(master=root, text='Zoek',command=invoer, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+    button.place(x=570, y=10, width=100, height=40)
+
+    afsluiten = Button (master=root, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+    afsluiten.place(x=680,y=10, width=100, height=40)
 
     entry.bind("<Return>",callback)
-
