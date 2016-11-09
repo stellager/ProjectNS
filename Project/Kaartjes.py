@@ -234,7 +234,7 @@ def longus():
         if onbekend==2:
             listbox.insert(0,'Station onbekend, probeer het opnieuw.')
             listbox.place(x=0, y=70, width=800, height=430)
-            opnieuw()
+            keuze_2=''
         else:
             global stat2
             stat2=s
@@ -326,8 +326,4 @@ def haversine(lon1, lat1, lon2, lat2):
     km2= round(km,2)
 
 
-
-
 station_lijst_2()
-GUI_Kaartjes()
-root.mainloop()
