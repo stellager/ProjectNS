@@ -7,23 +7,7 @@ import requests
 import xmltodict
 from tkinter import *
 
-root = Tk()
-root.configure(background='white')
-photo = PhotoImage(file="download.png")
 
-root.wm_title("")
-root.iconbitmap('favicon.ico')
-root.resizable(width=False, height=False)
-root.geometry('{}x{}'.format(800, 450))
-
-logo=Label(image=photo, borderwidth=0, highlightthickness=0).place(x=5, y=5)
-
-
-entry=Entry(master=root, bd=0, font="calibri 13", fg='#0079D3')
-entry.place(x=470, y=10, width=235, height=40)
-entry.insert(0, 'Typ hier uw bestemming...')
-
-listbox = Listbox(master=root, bg='#FFC917', bd=1, font="calibri 14")
 
 
 
@@ -161,14 +145,35 @@ def callback(event):
     g=event
     invoer()
 
-button=Button(master=root, text='Zoek',command=invoer, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
-button.place(x=695, y=10, width=90, height=40)
+def GUI():
+    global root
+    global entry
+    global logo
+    global listbox
+    global button
 
-entry.bind("<Return>",callback)
+    root = Tk()
+    root.configure(background='white')
+    photo = PhotoImage(file="download.png")
 
-###########################
-station_lijst()
-treininfo('http://webservices.ns.nl/ns-api-avt?station=Utrecht','Utrecht')
-root.mainloop()
+    root.wm_title("")
+    root.iconbitmap('favicon.ico')
+    root.resizable(width=False, height=False)
+    root.geometry('{}x{}'.format(800, 450))
 
-print(url2)
+    logo=Label(image=photo, borderwidth=0, highlightthickness=0).place(x=5, y=5)
+
+
+    entry=Entry(master=root, bd=0, font="calibri 13", fg='#0079D3')
+    entry.place(x=470, y=10, width=235, height=40)
+    entry.insert(0, 'Typ hier uw bestemming...')
+
+    listbox = Listbox(master=root, bg='#FFC917', bd=1, font="calibri 14")
+    button=Button(master=root, text='Zoek',command=invoer, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+    button.place(x=695, y=10, width=90, height=40)
+
+    entry.bind("<Return>",callback)
+
+
+
+
