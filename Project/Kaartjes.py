@@ -73,23 +73,6 @@ class ComboBoxDemo(ttk.Frame):
 
 
 
-root = Tk()
-root.configure(background='white')
-photo = PhotoImage(file="download.png")
-
-root.wm_title("Kaartverkoop")
-root.iconbitmap('favicon.ico')
-root.resizable(width=False, height=False)
-root.geometry('{}x{}'.format(640, 360))
-
-logo=Label(image=photo).place(x=0, y=0)
-
-entry=Entry(master=root)
-entry.place(x=300, y=30, width=200, height=40)
-
-listbox = Listbox(master=root, background='#FFC917')
-listbox.place(x=20, y=100, width=600, height=240)
-listbox.config()
 
 
 list=['JA','NEE']
@@ -167,8 +150,10 @@ def stationskeuze(x):
         onbekend=0
         global keuze
         global keuze3
-
-        if x in stationslijst:
+        utrecht=['Utrecht', 'utrecht', 'Utrecht c.','utrecht c.', 'utrecht C.', 'Utrecht C.']
+        if x in utrecht:
+            return [52.0888900756836,5.11027765274048]
+        elif x in stationslijst:
             keuze=x
             if keuze in codes:
                 keuze3= stationslijst[stationslijst.index(keuze)+3]
@@ -245,12 +230,31 @@ def main():
     opnieuw()
 
 
+def callback(event):
+    g=event
+    longus
+root = Tk()
+root.configure(background='white')
+photo = PhotoImage(file="download.png")
 
+root.wm_title("Kaartverkoop")
+root.iconbitmap('favicon.ico')
+root.resizable(width=False, height=False)
+root.geometry('{}x{}'.format(640, 360))
+
+logo=Label(image=photo).place(x=0, y=0)
+
+entry=Entry(master=root)
+entry.place(x=300, y=30, width=200, height=40)
+
+listbox = Listbox(master=root, background='#FFC917')
+listbox.place(x=20, y=100, width=600, height=240)
+listbox.config()
 
 button=Button(master=root, text='Zoek',command=longus, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
 button.place(x=500, y=30, width=90, height=40)
 
-
+button.bind("<Return>",callback)
 
 
 def haversine(lon1, lat1, lon2, lat2):
@@ -274,4 +278,4 @@ station_lijst_2()
 root.mainloop()
 print(onbekend)
 
-print('Utrecht' in stationslijst)
+
