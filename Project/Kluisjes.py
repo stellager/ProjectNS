@@ -116,14 +116,19 @@ class GUI_2 (object):
     def __init__(self):
 
         vraag=self.vraag=Toplevel(kluis)
-        self.entryl2=Label(vraag,text="Voer uw code in :")
-        self.entryl2.pack()
+        vraag.iconbitmap('favicon.ico')
+        vraag.configure(background='white')
+        vraag.resizable(width=False, height=False)
+        vraag.geometry('{}x{}'.format(400, 225))
 
-        self.entry2=Entry(vraag, show="*")
-        self.entry2.pack()
+        self.entryl2=Label(vraag,text="Voer uw kluiscode in", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 18 bold")
+        self.entryl2.place(x=75,y=20, width=250, height=40)
 
-        self.entryb2=Button(vraag, text='Geef code uw code', command=self.cleanup)
-        self.entryb2.pack()
+        self.entry2=Entry(vraag, show="*", bd=1, font="calibri 13", fg='#0079D3')
+        self.entry2.place(x=150,y=85, width=100, height=40)
+
+        self.entryb2=Button(vraag, text='Geef uw code', command=self.cleanup, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+        self.entryb2.place(x=100,y=145, width=200, height=40)
 
     def cleanup(self):
 
@@ -137,14 +142,19 @@ class GUI_3 (object):
     def __init__(self):
 
         vraag=self.vraag=Toplevel(kluis)
-        self.entryl3=Label(vraag,text="Voer uw code in :")
-        self.entryl3.pack()
+        vraag.iconbitmap('favicon.ico')
+        vraag.configure(background='white')
+        vraag.resizable(width=False, height=False)
+        vraag.geometry('{}x{}'.format(400, 225))
 
-        self.entry3=Entry(vraag, show="*")
-        self.entry3.pack()
+        self.entryl3=Label(vraag,text="Voer uw code in", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 18 bold")
+        self.entryl3.place(x=75,y=20, width=250, height=40)
 
-        self.entryb3=Button(vraag, text='Geef uw code', command=self.cleanup)
-        self.entryb3.pack()
+        self.entry3=Entry(vraag, show="*", bd=1, font="calibri 13", fg='#0079D3')
+        self.entry3.place(x=150,y=85, width=100, height=40)
+
+        self.entryb3=Button(vraag, text='Geef uw code', command=self.cleanup, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+        self.entryb3.place(x=100,y=145, width=200, height=40)
 
     def cleanup(self):
 
@@ -169,7 +179,6 @@ def GUI_kluisjes():
 
     kluis = Tk()
     kluis.configure(background='white')
-    photo = PhotoImage(file="download.png")
 
     kluis.wm_title("")
     kluis.iconbitmap('favicon.ico')
