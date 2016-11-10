@@ -77,19 +77,25 @@ class ComboBoxDemo(ttk.Frame):
 
     def _butone(self):
         global button1
-        button1=Button(root, text='Volgende',command=self.leeftijdwaarde, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+        button1=Button(root, text='Volgende',command=self.informatie, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
         button1.place(x=350, y=350, width=100, height=40)
 
 
-    def leeftijdwaarde(self):
-        global leeftijd
-        leeftijd=cb3.get()
+    def informatie(self):
+        global vertrekstation
+        global reiswijze
+        global aankomststation
+        global tussenstation
+        vertrekstation=entry3.get()
+        reiswijze=cb1.get()
+        tussenstation=entry1.get()
+        aankomststation=entry4.get()
 
-        cb3.destroy()
-        button1.destroy()
-        button1.quit()
+
+
         self.destroy()
         self.quit()
+
 
 
 stationslijst=[]
@@ -123,25 +129,25 @@ def station_lijst():
             continue
     return stationslijst
 
-def stationskeuze():
+def stationskeuze(keuze):
     while True:
         global onbekend
         onbekend=0
-        global keuze
+
 
 
         if keuze in stationslijst:
             if keuze in codes:
-                keuze= stationslijst[stationslijst.index(keuze)+3]
-            keuze2=keuze.replace(" " ,"+")
+                keuze1= stationslijst[stationslijst.index(keuze)+3]
+            keuze2=keuze1.replace(" " ,"+")
             keuze3=keuze2.replace("'","%27")
             keuze4=keuze3.replace(".","%2E")
             global url2
             url2= beginurl+keuze4
             return url2
         elif keuze.title() in stationslijst:
-            keuze=keuze.title()
-            keuze2=keuze.replace(" " ,"+")
+            keuze1=keuze.title()
+            keuze2=keuze1.replace(" " ,"+")
             keuze3=keuze2.replace("'","%27")
             keuze4=keuze3.replace(".","%2E")
             global url2
@@ -149,8 +155,8 @@ def stationskeuze():
             return url2
         elif keuze.upper() in stationslijst:
             if keuze.upper() in codes:
-                keuze= stationslijst[stationslijst.index((keuze.upper()))+3]
-            keuze2=keuze.replace(" " ,"+")
+                keuze1= stationslijst[stationslijst.index((keuze.upper()))+3]
+            keuze2=keuze1.replace(" " ,"+")
             keuze3=keuze2.replace("'","%27")
             keuze4=keuze3.replace(".","%2E").replace("(","%28").replace(")","%29")
             global url2
@@ -164,8 +170,17 @@ def stationskeuze():
 with open('reisinfo.xml', 'w',encoding="utf8") as myXMLFile:
     myXMLFile.write(reisinfo_response.text)
     myXMLFile.close()
+def info_checker():
+    stationskeuze(vertrekstation)
+    stationskeuze(aankomststation)
+
+    if reiswijze =='Via Station':
+        stationskeuze(tussenstation)
+
 def main():
     ComboBoxDemo().mainloop()
+    info_checker()
+
 def callback(event):
     g=event
     main()
