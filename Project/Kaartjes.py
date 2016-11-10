@@ -157,6 +157,7 @@ def stationskeuze(x):
 
         utrecht=['Utrecht', 'utrecht', 'Utrecht c.','utrecht c.', 'utrecht C.', 'Utrecht C.']
         if x in utrecht:
+            s='Utrecht Centraal'
             return [52.0888900756836,5.11027765274048]
         elif x in stationslijst:
             keuze=x
