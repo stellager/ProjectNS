@@ -35,38 +35,51 @@ class ComboBoxDemo(ttk.Frame):
         demoPanel.pack(side=BOTTOM, fill=BOTH, expand=Y)
 
         global labelcb1
-        dag2=Label(root, text='Reiswijze', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
-        dag2.place(x=580, y=160, width=150, height=40)
+        labelcb1=Label(root, text='Reiswijze', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        labelcb1.place(x=230, y=160, width=150, height=40)
 
         global entry1
         entry1=Entry(root, font="calibri 13")
-        entry1.place(x=580, y=245, width=150, height=40)
+        entry1.place(x=230, y=245, width=150, height=40)
 
         global labelcb3
-        dag2=Label(root, text='Moment', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
-        dag2.place(x=300, y=160, width=150, height=40)
+        labelcb3=Label(root, text='Moment', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        labelcb3.place(x=610, y=160, width=150, height=40)
         global entry2
         entry2=Entry(root, font="calibri 13")
-        entry2.place(x=300, y=245, width=150, height=40)
+        entry2.place(x=610, y=245, width=150, height=40)
+        global labelstat1
+        labelstat1=Label(root, text='Vertrekstation', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        labelstat1.place(x=40, y=160, width=150, height=40)
+        global entry3
+        entry3=Entry(root, font="calibri 13")
+        entry3.place(x=40, y=245, width=150, height=40)
+
+        global labelstat2
+        labelstat2=Label(root, text='Aankomststation', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        labelstat2.place(x=420, y=160, width=150, height=40)
+        global entry4
+        entry4=Entry(root, font="calibri 13")
+        entry4.place(x=420, y=245, width=150, height=40)
 
         global cb1
         opties = ('Via Station', 'Direct')
         cb1 = ttk.Combobox(root, values=opties, state='readonly')
         cb1.current(1)  # set selection
-        cb1.place(x=580, y=200, width=150, height=40)
+        cb1.place(x=230, y=200, width=150, height=40)
         global cb2
         opties2=''
         global cb3
         opties3=('Tijd van aankomst','Tijd van vertrek','Nu')
         cb3 = ttk.Combobox(root, values=opties3, state='readonly')
         cb3.current(1)  # set selection
-        cb3.place(x=300, y=200, width=150, height=40)
+        cb3.place(x=610, y=200, width=150, height=40)
 
     def _butone(self):
         global button1
         button1=Button(root, text='Volgende',command=self.leeftijdwaarde, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
-        button1.place(x=350, y=300, width=100, height=40)
-        
+        button1.place(x=350, y=350, width=100, height=40)
+
 
     def leeftijdwaarde(self):
         global leeftijd
