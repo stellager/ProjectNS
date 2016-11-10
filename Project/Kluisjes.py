@@ -186,19 +186,22 @@ def GUI_kluisjes():
     kluis.geometry('{}x{}'.format(800, 450))
 
     title2=Label(kluis, text="Kluisjes", borderwidth=0, highlightthickness=0, bg='white', fg="#003082", font="calibri 20 bold")
-    title2.place(x=330, y=0)
+    title2.place(x=20, y=10)
+
+    listbox = Listbox(kluis, bg='#FFC917', bd=1, font="calibri 14")
+    listbox.place(x=0, y=70, width=800, height=430)
 
     nemen = Button (kluis, text ="Kluisje nemen", command = keuze_1, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
-    nemen.place(x=160,y=70, width=200, height=150)
+    nemen.place(x=160,y=90, width=200, height=150)
 
     openen = Button (kluis, text ="Kluisje openen", command = GUI_2, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
-    openen.place(x=388,y=70, width=200, height=150)
+    openen.place(x=388,y=90, width=200, height=150)
 
     teruggeven = Button (kluis, text ="Kluisje teruggeven", command = GUI_3, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
-    teruggeven.place(x=160,y=250, width=200, height=150)
+    teruggeven.place(x=160,y=270, width=200, height=150)
 
     bekijken = Button (kluis, text ="Kluisje bekijken", command = keuze_4, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 15 bold")
-    bekijken.place(x=388,y=250, width=200, height=150)
+    bekijken.place(x=388,y=270, width=200, height=150)
 
     afsluiten = Button (kluis, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
     afsluiten.place(x=680,y=10, width=100, height=40)
