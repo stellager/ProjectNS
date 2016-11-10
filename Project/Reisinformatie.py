@@ -7,14 +7,17 @@ import datetime
 from tkinter import *
 from tkinter import ttk
 
-
+global url2
+global url3
+url2=''
+tijd='Datum en tijd(24:00)'
 auth_details = ('t.hoogeland@live.com','3leOcnJcxNX8Hw3gJ7v5zn3EP2T_R_gEwcotJ-aQ0zzNz4ayWNO-tA')
 reisinfo_url = 'http://webservices.ns.nl/ns-api-treinplanner?fromStation=Utrecht+Centraal&toStation=Wierden&departure=true'
 stations_url = 'http://webservices.ns.nl/ns-api-stations-v2'
-reisinfo_response = requests.get(reisinfo_url, auth=auth_details)
-reisinfoXML = xmltodict.parse(reisinfo_response.text)
+
 stations_response = requests.get(stations_url, auth=auth_details)
 stationsXML = xmltodict.parse(stations_response.text)
+
 ##
 
 class ComboBoxDemo(ttk.Frame):
@@ -39,32 +42,34 @@ class ComboBoxDemo(ttk.Frame):
         labelcb1.place(x=230, y=160, width=150, height=40)
 
         global entry1
-        entry1=Entry(root, font="calibri 13")
+        entry1=Entry(root, bd=0, font="calibri 9", fg='#0079D3')
         entry1.place(x=230, y=245, width=150, height=40)
-
+        entry1.insert(0, 'Vul een tussenstation in...')
         global labelcb3
         labelcb3=Label(root, text='Moment', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
         labelcb3.place(x=610, y=160, width=150, height=40)
         global entry2
-        entry2=Entry(root, font="calibri 13")
+        entry2=Entry(root, bd=0, font="calibri 9", fg='#0079D3')
         entry2.place(x=610, y=245, width=150, height=40)
+        entry2.insert(0, 'Disabled')
         global labelstat1
         labelstat1=Label(root, text='Vertrekstation', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
         labelstat1.place(x=40, y=160, width=150, height=40)
         global entry3
-        entry3=Entry(root, font="calibri 13")
+        entry3=Entry(root, bd=0, font="calibri 9", fg='#0079D3')
         entry3.place(x=40, y=245, width=150, height=40)
+        entry3.insert(0,'Gewenst vertrekstation..')
 
         global labelstat2
         labelstat2=Label(root, text='Aankomststation', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
         labelstat2.place(x=420, y=160, width=150, height=40)
         global entry4
-        entry4=Entry(root, font="calibri 13")
+        entry4=Entry(root, bd=0, font="calibri 9", fg='#0079D3')
         entry4.place(x=420, y=245, width=150, height=40)
-
+        entry4.insert(0,'Gewenst aankomststation..')
         global cb1
         opties = ('Via Station', 'Direct')
-        cb1 = ttk.Combobox(root, values=opties, state='readonly')
+        cb1 = ttk.Combobox(root, values=opties, font="calibri 9",  state='readonly')
         cb1.current(1)  # set selection
         cb1.place(x=230, y=200, width=150, height=40)
         global cb2
@@ -86,12 +91,49 @@ class ComboBoxDemo(ttk.Frame):
         global reiswijze
         global aankomststation
         global tussenstation
+        global moment
+        global moment_url
+        global reisinfoXML
+        moment=cb3.get()
         vertrekstation=entry3.get()
         reiswijze=cb1.get()
         tussenstation=entry1.get()
         aankomststation=entry4.get()
+        stationskeuze(vertrekstation)
+        if onbekend==2:
+            entry3.insert(0,'Onbekend vertrekstation..')
+        global vertrek_url
+        vertrek_url='http://webservices.ns.nl/ns-api-treinplanner?fromStation='+url2
+        stationskeuze(aankomststation)
+        if onbekend==2:
+            entry4.insert(0,'Onbekend aankomststation..')
+        global aankomst_url
+        aankomst_url='&toStation='+url2
+        if reiswijze =='Via Station':
+            stationskeuze(tussenstation)
+            if onbekend==2:
+                entry1.insert(0,'Onbekend aankomststation..')
+            else:
+                global tussen_url
+                tussen_url='&viaStation='+url2
+        else :
+            tussen_url=''
+        if moment=='Tijd van vertrek':
+            moment_url='&departure=true'
+        elif moment=='Tijd van aankomst':
+            moment_url='&departure=false'
+        else:moment_url=''
+        eind_url=vertrek_url+aankomst_url+tussen_url+moment_url
+        reisinfo_response = requests.get(eind_url, auth=auth_details)
 
-
+        with open('reisinfo.xml', 'w',encoding="utf8") as myXMLFile:
+            myXMLFile.write(reisinfo_response.text)
+            myXMLFile.close()
+        reisinfoXML = xmltodict.parse(reisinfo_response.text)
+        station_lijst_info()
+        print(globale_info)
+        print(eind_url)
+        print(reiswijze)
 
         self.destroy()
         self.quit()
@@ -100,11 +142,18 @@ class ComboBoxDemo(ttk.Frame):
 
 stationslijst=[]
 codes=[]
-beginurl='http://webservices.ns.nl/ns-api-avt?station='
+beginurl=''
+beginurl_begin='http://webservices.ns.nl/ns-api-treinplanner?fromStation='
+
+beginurl_tussen='&viaStation='
+beginurl_eind='&toStation='
+
 keuze=''
 keuze1=''
 keuze2=''
-
+reisinfolijst=[]
+overstappen=[]
+globale_info=[]
 with open('stations.xml', 'w',encoding="utf8") as myXMLFile:
     myXMLFile.write(stations_response.text)
     myXMLFile.close()
@@ -130,6 +179,8 @@ def station_lijst():
     return stationslijst
 
 def stationskeuze(keuze):
+    global url2
+    global url3
     while True:
         global onbekend
         onbekend=0
@@ -138,12 +189,14 @@ def stationskeuze(keuze):
 
         if keuze in stationslijst:
             if keuze in codes:
-                keuze1= stationslijst[stationslijst.index(keuze)+3]
+                keuze= stationslijst[stationslijst.index(keuze)+3]
+            keuze1=keuze
             keuze2=keuze1.replace(" " ,"+")
             keuze3=keuze2.replace("'","%27")
             keuze4=keuze3.replace(".","%2E")
-            global url2
+
             url2= beginurl+keuze4
+
             return url2
         elif keuze.title() in stationslijst:
             keuze1=keuze.title()
@@ -152,34 +205,41 @@ def stationskeuze(keuze):
             keuze4=keuze3.replace(".","%2E")
             global url2
             url2= beginurl+keuze4
+
             return url2
         elif keuze.upper() in stationslijst:
             if keuze.upper() in codes:
-                keuze1= stationslijst[stationslijst.index((keuze.upper()))+3]
+                keuze= stationslijst[stationslijst.index((keuze.upper()))+3]
+            keuze1=keuze
             keuze2=keuze1.replace(" " ,"+")
             keuze3=keuze2.replace("'","%27")
             keuze4=keuze3.replace(".","%2E").replace("(","%28").replace(")","%29")
             global url2
             url2= beginurl+keuze4
+
             return url2
 
         else:
+            global onbekend
             onbekend=2
             break
 
-with open('reisinfo.xml', 'w',encoding="utf8") as myXMLFile:
-    myXMLFile.write(reisinfo_response.text)
-    myXMLFile.close()
-def info_checker():
-    stationskeuze(vertrekstation)
-    stationskeuze(aankomststation)
 
-    if reiswijze =='Via Station':
-        stationskeuze(tussenstation)
+def station_lijst_info():
+    for mogelijkheden in reisinfoXML['ReisMogelijkheden']['ReisMogelijkheid']:
+        globale_info.append(mogelijkheden['AantalOverstappen'])
+
+        globale_info.append(mogelijkheden['GeplandeReisTijd'])
+        globale_info.append(mogelijkheden['ActueleReisTijd'])
+        for reisdelen in mogelijkheden['ReisDeel']:
+            globale_info.append(reisdelen['Reisdeel'][0])
+            globale_info.append(reisdelen['Reisdeel'][-1])
+
+    return globale_info
 
 def main():
     ComboBoxDemo().mainloop()
-    info_checker()
+
 
 def callback(event):
     g=event
@@ -217,5 +277,6 @@ def GUI_Kaartjes():
     afsluiten.place(x=680,y=10, width=100, height=40)
 
     entry.bind("<Return>",callback)
+station_lijst()
 GUI_Kaartjes()
 root.mainloop()
