@@ -25,7 +25,7 @@ class ComboBoxDemo(ttk.Frame):
         self.master.title('')
         self.isapp = isapp
         global dag
-        dag=Label(text='Dag van de week: '+weekdagen[datetime.datetime.today().weekday()], bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        dag=Label(root, text='Dag van de week: '+weekdagen[datetime.datetime.today().weekday()], bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
         dag.place(x=300, y=260, width=200, height=40)
         self._butone()
         self._create_demo_panel()
@@ -38,7 +38,7 @@ class ComboBoxDemo(ttk.Frame):
         demoPanel.pack(side=BOTTOM, fill=BOTH, expand=Y)
 
         global dag2
-        dag2=Label(text='Leeftijd categorie', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
+        dag2=Label(root, text='Leeftijd categorie', bg='#FFC917', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13")
         dag2.place(x=300, y=160, width=200, height=40)
 
         global cb3
@@ -50,7 +50,7 @@ class ComboBoxDemo(ttk.Frame):
 
     def _butone(self):
         global button1
-        button1=Button(text='Volgende',command=self.leeftijdwaarde, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+        button1=Button(root, text='Volgende',command=self.leeftijdwaarde, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
         button1.place(x=350, y=300, width=100, height=40)
     def leeftijdwaarde(self):
         global leeftijd
@@ -323,4 +323,3 @@ def haversine(lon1, lat1, lon2, lat2):
 
 
 station_lijst_2()
-
