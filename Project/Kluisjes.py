@@ -95,7 +95,7 @@ def keuze_3():
     code = value
 
     for i in range(len(x)):
-        if code is "-" or " ":
+        if code is "-" or "":
             msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
             break
         else:
