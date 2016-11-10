@@ -174,7 +174,7 @@ def stationskeuze(x):
                 s=keuze3
                 return longlat[(middel.index(keuze))]
             elif keuze in lang:
-                keuze=keuze3
+                keuze3=keuze
                 s=keuze3
                 return longlat[(lang.index(keuze))]
         elif x.title() in stationslijst:
@@ -192,7 +192,7 @@ def stationskeuze(x):
                 s=keuze3
                 return longlat[middel.index(keuze)]
             elif keuze in lang:
-                keuze=keuze3
+                keuze3=keuze
                 s=keuze3
                 return longlat[lang.index(keuze)]
 
