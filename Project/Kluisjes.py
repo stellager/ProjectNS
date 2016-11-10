@@ -1,3 +1,10 @@
+# Bram Schenau - 1700154
+#
+###############################################
+#
+# imports
+#
+###############################################
 import random
 import csv
 from tkinter import *
@@ -68,12 +75,16 @@ def keuze_2():
     code = value
 
     for i in range(len(x)):
-        if code in x[i][1]:
-            msg=messagebox.showinfo("Info","Kluisje {} gaat open.\n".format(x[i][0]))
-        elif code not in x[i][1] :
-            count += 1
-            if count >= len(x):
-                msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
+        if code is "-" or " ":
+            msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
+            break
+        else:
+            if code in x[i][1]:
+                msg=messagebox.showinfo("Info","Kluisje {} gaat open.\n".format(x[i][0]))
+            elif code not in x[i][1] :
+                count += 1
+                if count >= len(x):
+                    msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
 
 def keuze_3():
 
@@ -84,16 +95,20 @@ def keuze_3():
     code = value
 
     for i in range(len(x)):
-        if code in x[i][1]:
-            msg=messagebox.showinfo("Info","Kluisje {} wordt terug gegeven.\n".format(i + 1))
-            x[i][1] = '-'
-            lijst = x
-            schrijven_csv(bestand, lijst)
+        if code is "-" or " ":
+            msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
             break
-        elif code not in x[i][1] :
-            count += 1
-            if count >= len(x):
-                msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
+        else:
+            if code in x[i][1]:
+                msg=messagebox.showinfo("Info","Kluisje {} wordt terug gegeven.\n".format(i + 1))
+                x[i][1] = '-'
+                lijst = x
+                schrijven_csv(bestand, lijst)
+                break
+            elif code not in x[i][1] :
+                count += 1
+                if count >= len(x):
+                    msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
 
 def keuze_4():
 
@@ -108,7 +123,6 @@ def keuze_4():
 
 def keuze_5():
 
-    #msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
     kluis.destroy()
 
 class GUI_2 (object):
@@ -168,6 +182,7 @@ class GUI_3 (object):
 # GUI menu
 #
 ###############################################
+
 def GUI_kluisjes():
 
     global kluis
