@@ -255,6 +255,10 @@ def longus():
             lat2=float(stat_2[0])
             haversine(lon1, lat1, lon2, lat2)
             main()
+    elif keuze is not 0:
+        opnieuw()
+    elif keuze_2 is not 0:
+        opnieuw()
 ###############################
 #-Reset variabelen voor 2de input
 ###############################
