@@ -23,10 +23,15 @@ vertraging=''
 spoor=int
 stationslijst=[]
 codes=[]
-
+###############################
+#-schrijft opgehaalde stationsinfo weg in een xml bestand
+###############################
 with open('stations.xml', 'w',encoding="utf8") as myXMLFile:
     myXMLFile.write(stations_response.text)
     myXMLFile.close()
+###############################
+#-Checkt of input in de lijst met stations staat, geeft een url terug en de lange naam van het station
+###############################
 def stationskeuze():
     while True:
         global onbekend
@@ -64,7 +69,9 @@ def stationskeuze():
             onbekend=2
             break
 
-
+###############################
+#-Vraagt de ns api aan met het station dat genoemd is en geeft vertrekinformatie van dit station weer op het scherm
+###############################
 def treininfo(x,y):
         response = requests.get(x, auth=auth_details)
         with open('vertrektijden.xml', 'w',encoding="utf8") as myXMLFile:
@@ -99,7 +106,9 @@ def treininfo(x,y):
             listbox.insert(END,("    " + vertrektijd + '' + vertraging2 + ' ' + treintype + ' naar '+ eindbestemming+' vanaf spoor: '+'{:2}'.format(spoor2)))
 
         listbox.place(x=0, y=70, width=800, height=430)
-
+###############################
+#-Maakt lijsten waar alle stations,stationscodes,codes en synoniemen in te vinden zijn
+###############################
 def station_lijst():
     for station in stationsXML['Stations']['Station']:
         if station['Code']=='G':
@@ -122,7 +131,9 @@ def station_lijst():
 
 
 
-
+###############################
+#-Werkt als hoofdfunctie, zorgt ervoor dat als de keuze onbekend is dit wordt aangegeven en voert anders de infofunctie uit.
+###############################
 def invoer():
     global keuze
     listbox.delete(0,END)
@@ -137,15 +148,21 @@ def invoer():
         listbox.place(x=0, y=70, width=800, height=430)
     else:
         treininfo(url2,keuze)
-
+###############################
+#-Event trigger om de enter knop een functie aan te laten roepen
+###############################
 def callback(event):
     g=event
     invoer()
-
+###############################
+#-Om terug naar het menu te gaan
+###############################
 def keuze_5():
     #msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
     root.destroy()
-
+###############################
+#-Maakt de GUI
+###############################
 def GUI():
     global root
     global entry
