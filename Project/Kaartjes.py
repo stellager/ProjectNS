@@ -5,18 +5,27 @@ from math import radians, cos, sin, asin, sqrt
 import requests
 import xmltodict
 import datetime
+from tkinter import messagebox
 from tkinter import *
 from tkinter import ttk
 
 weekdagen=['Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag','Zondag']
 lang='en'
 weekdag=0
+
+###############################
+#-Vraagt huidige dag op en checkt of dit een werkdag is of niet
+###############################
 def dagvdweek():
     global weekdag
     if datetime.datetime.today().weekday() in range(0,5):
         weekdag=1
     else:
         weekdag=0
+
+###############################
+#-Creert een nieuwe GUI window met de mogelijkheid voor comboboxes
+###############################
 class ComboBoxDemo(ttk.Frame):
 
     def __init__(self, isapp=True, name='combobox'):
@@ -52,6 +61,9 @@ class ComboBoxDemo(ttk.Frame):
         global button1
         button1=Button(root, text='Volgende',command=self.leeftijdwaarde, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
         button1.place(x=350, y=300, width=100, height=40)
+###############################
+#-Vraagt waarde op die is aangegeven, sluit de gui af
+###############################
     def leeftijdwaarde(self):
         global leeftijd
         leeftijd=cb3.get()
@@ -63,15 +75,6 @@ class ComboBoxDemo(ttk.Frame):
         button1.quit()
         self.destroy()
         self.quit()
-
-
-
-
-
-
-
-
-
 
 
 list=['JA','NEE']
@@ -92,6 +95,10 @@ lang=[]
 syno=[]
 onbekend=0
 weekdag=0
+
+###############################
+#-Maakt lijsten waar alle stations,stationscodes,codes en synoniemen in te vinden zijn
+###############################
 def station_lijst_2():
     for station in stationsXML['Stations']['Station']:
         if station['Code']=='G':
@@ -118,10 +125,9 @@ def station_lijst_2():
             continue
     return stationslijst
 
-
-
-
-
+###############################
+#-Berekent prijsbenadering
+###############################
 def standaardprijs(afstandKM):
     global prijs
     if afstandKM>50:
@@ -131,6 +137,9 @@ def standaardprijs(afstandKM):
     elif afstandKM>0: prijs= 0.21*afstandKM+1
     else: prijs=0
 
+###############################
+#-Berekent korting
+###############################
 def ritprijs():
     if weekdag == 0:
         if leeftijd== '65+' or leeftijd =='12 jaar of jonger': return prijs*0.65
@@ -145,7 +154,9 @@ keuze=''
 keuze_2=''
 stat_1=[]
 stat_2=[]
-
+###############################
+#-Checkt of user input in de aangemaakte stationslijst staat
+###############################
 def stationskeuze(x):
     global s
 
@@ -158,6 +169,7 @@ def stationskeuze(x):
         utrecht=['Utrecht', 'utrecht', 'Utrecht c.','utrecht c.', 'utrecht C.', 'Utrecht C.']
         if x in utrecht:
             s='Utrecht Centraal'
+
             return [52.0888900756836,5.11027765274048]
         elif x in stationslijst:
             keuze=x
@@ -205,6 +217,9 @@ def stationskeuze(x):
         else:
             onbekend=2
             break
+###############################
+#- Zorgt ervoor dat 2 inputs gevraagd worden, voert functies uit die de informatie opvragen
+###############################
 def longus():
     listbox.delete(0,END)
 
@@ -240,6 +255,9 @@ def longus():
             lat2=float(stat_2[0])
             haversine(lon1, lat1, lon2, lat2)
             main()
+###############################
+#-Reset variabelen voor 2de input
+###############################
 def opnieuw():
     global keuze
     global keuze_2
@@ -251,6 +269,10 @@ def opnieuw():
     keuze_2=''
     stat_1=[]
     stat_2=[]
+
+###############################
+#-Werkt als hoofdfunctie, voert andere functies uit en zorgt voor de informatieweergave
+###############################
 def main():
     ComboBoxDemo().mainloop()
     standaardprijs(km2)
@@ -259,17 +281,24 @@ def main():
     c='Op een '+weekdagen[datetime.datetime.today().weekday()]+' bedraagt de prijs van uw rit van '+stat1+' naar '+stat2+': €'+"{0:.2f}".format(a)+' euro.'
     listbox.insert(0,(b))
     listbox.insert(1,(c))
-    listbox.insert(5,'Disclaimer: Deze prijs is enkel een benadering.')
+    listbox.insert(2,'\n')
+    listbox.insert(5,'Houdt uw OV-chipkaart voor de scanner.')
     opnieuw()
-
+###############################
+#-Om terug naar het menu te gaan
+###############################
 def keuze_5():
     #msg=messagebox.showinfo("Info","\nHet programma sluit af\n")
     root.destroy()
-
+###############################
+#-Event trigger om de enter knop een functie aan te laten roepen
+###############################
 def callback(event):
     g=event
     longus()
-
+###############################
+#-Maakt de GUI
+###############################
 def GUI_Kaartjes():
     global root
     global entry
@@ -305,7 +334,9 @@ def GUI_Kaartjes():
 
     entry.bind("<Return>",callback)
 
-
+###############################
+#-Berekent afstand aan de hand van coordinaten
+###############################
 def haversine(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points
