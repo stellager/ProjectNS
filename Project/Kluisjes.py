@@ -14,9 +14,11 @@ bestand = "kluisjes.csv"
 
 ###############################################
 #
-# Script
+# Functies
 #
 ###############################################
+
+# functie om een willekeurige code te maken van 4 cijfers voor de gebruiker
 def willekeurig():
 
     nummer_1 = str(random.randrange(1,10))
@@ -27,6 +29,7 @@ def willekeurig():
     code = nummer_1+nummer_2+nummer_3+nummer_4
     return code
 
+# functie voor het inlezen van de CSV file waar de kluisjes met codes in staan.
 def lezen_csv(x):
 
     lijst = []
@@ -39,6 +42,7 @@ def lezen_csv(x):
 
     return lijst
 
+# functie voor het wegschrijven van de CSV file waar de kluisjes met codes in staan.
 def schrijven_csv(x, y):
 
     with open(x, 'w', newline='') as CSV:
@@ -47,6 +51,8 @@ def schrijven_csv(x, y):
         for i in range(len(y)):
             writer.writerow((y[i][0], y[i][1]))
 
+# functie die een kluisje kiest en een code aan de gebruiker geeft.
+# Zorgt er ook voor dat er niet 2 dezelfde codes in kunnen staan
 def keuze_1():
 
     global bestand
@@ -66,6 +72,7 @@ def keuze_1():
         elif i == 11:
             msg=messagebox.showinfo("Error", "Alle kluisjes zitten vol.")
 
+# functie die om invoer van een code vraagt en vervolgens het kluisje opent met die code.
 def keuze_2():
 
     global value
@@ -86,6 +93,8 @@ def keuze_2():
                 if count >= len(x):
                     msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
 
+# functie die om invoer van een code vraagt en
+# vervolgens de code van het kluisje haalt en het mogelijk maakt om het kluisje opnieuw uit te delen
 def keuze_3():
 
     global value
@@ -110,6 +119,7 @@ def keuze_3():
                 if count >= len(x):
                     msg=messagebox.showinfo("Info","Foute code, Probeer het opnieuw")
 
+# Functie die telt hoeveel kluisjes er vrij zijn
 def keuze_4():
 
     global bestand
@@ -121,10 +131,12 @@ def keuze_4():
             count += 1
     msg=messagebox.showinfo("Info", "Er zijn nog {} beschikbaar \n".format(count))
 
+# functie die de GUI afsluit
 def keuze_5():
 
     kluis.destroy()
 
+# GUI die de oproepbox maakt waar je je code in moet voeren voor als je je kluisje wilt openen
 class GUI_2 (object):
 
     def __init__(self):
@@ -141,7 +153,7 @@ class GUI_2 (object):
         self.entry2=Entry(vraag, show="*", bd=1, font="calibri 13", fg='#0079D3')
         self.entry2.place(x=150,y=85, width=100, height=40)
 
-        self.entryb2=Button(vraag, text='Geef uw code', command=self.cleanup, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+        self.entryb2=Button(vraag, text='Open kluis', command=self.cleanup, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
         self.entryb2.place(x=100,y=145, width=200, height=40)
 
     def cleanup(self):
@@ -151,6 +163,7 @@ class GUI_2 (object):
         self.vraag.destroy()
         keuze_2()
 
+# GUI die de oproepbox maakt waar je je code in moet voeren voor als je je kluisje terug wil geven
 class GUI_3 (object):
 
     def __init__(self):
@@ -167,7 +180,7 @@ class GUI_3 (object):
         self.entry3=Entry(vraag, show="*", bd=1, font="calibri 13", fg='#0079D3')
         self.entry3.place(x=150,y=85, width=100, height=40)
 
-        self.entryb3=Button(vraag, text='Geef uw code', command=self.cleanup, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
+        self.entryb3=Button(vraag, text='Geef kluisje terug', command=self.cleanup, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
         self.entryb3.place(x=100,y=145, width=200, height=40)
 
     def cleanup(self):
@@ -177,12 +190,7 @@ class GUI_3 (object):
         self.vraag.destroy()
         keuze_3()
 
-###############################################
-#
-# GUI menu
-#
-###############################################
-
+# Functie die het menu maakt van de kluisjes
 def GUI_kluisjes():
 
     global kluis
@@ -221,4 +229,3 @@ def GUI_kluisjes():
     afsluiten = Button (kluis, text ="Menu", command = keuze_5, fg='white', bg='#0079D3', activebackground='#003082', activeforeground='white', bd=0, font="calibri 13 bold")
     afsluiten.place(x=680,y=10, width=100, height=40)
 
-    kluis.mainloop()
