@@ -6,7 +6,7 @@ Als je ons project succesvol wilt kunnen uitvoeren zijn er een paar dingen die e
   
 Het enige wat er dan nog te doen staat is het bestand menu.py te openen en die te runnen.
  
-# Problemem?
+# Problemen?
 Stappen om te controleren:
   1. Heb je xmltodict en requests bij je Project Interpreters staan?
   2. Staan alle bestanden in de zelfde map? (root folder)
